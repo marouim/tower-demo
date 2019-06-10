@@ -1,5 +1,5 @@
 ---
-  - name: Assign IP from Netbox
+  - name: Update Netbox
     gather_facts: no
     hosts: routers
     vars:
@@ -9,21 +9,20 @@
       
     tasks:
 
-      - name: Assign IP from Netbox
+      - name: Update Netbox IP address description
         uri:
-          url: "{{ netbox_url }}/api/ipam/prefixes/{{ prefix_id }}/available-ips/"
-          method: "POST"
+          url: "{{ netbox_url }}/api/ipam/ip-addresses/{{ ip_address_id }}/"
+          method: "PATCH"
           headers:
             Authorization: "{{ netbox_api_token }}"
-          status_code: 201
+          status_code: 200
+          body:
+            description: "Router 1 Loopback 10"
+          body_format: json
         register: netbox_result
         run_once: yes
         
       - debug:
           var: netbox_result
         run_once: yes
-      
-      - set_stats:
-          data:
-            ip_address: "{{ netbox_result.json.address }}"
-            ip_address_id: "{{ netbox_result.json.id }}"
+
