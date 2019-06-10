@@ -17,7 +17,7 @@
             Authorization: "{{ netbox_api_token }}"
           status_code: 200
           body:
-            description: "Router 1 Loopback 10"
+            description: "Router 1 {{ interface_name }}"
           body_format: json
         register: netbox_result
         run_once: yes
