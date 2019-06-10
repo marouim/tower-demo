@@ -13,4 +13,4 @@
           parents:
             - "interface Loopback10"
           lines:
-            - "ip address {{ ip_address }}"
+            - "ip address {{ ip_address }} 255.255.255.0"
