@@ -1,0 +1,12 @@
+all:
+  children:
+    routers:
+      hosts:
+        router1:
+          ansible_host: 10.211.55.43
+          ansible_user: lab
+          ansible_password: lab
+          ansible_network_os: ios
+      vars:
+        ansible_connection: network_cli
+        integration_api_url: "http://10.211.55.2:5000"

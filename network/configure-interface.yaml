@@ -1,0 +1,16 @@
+---
+  - name: Configure L3 Interface
+    gather_facts: no
+    hosts: routers
+    tasks:
+
+      - name: Display IP address that will be configured
+        debug:
+          var: ip_address
+    
+      - name: Configure L3 interface
+        ios_config:
+          parents:
+            - "interface Loopback10"
+          lines:
+            - "ip address {{ ip_address }}"

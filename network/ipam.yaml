@@ -1,0 +1,28 @@
+---
+  - name: Assign IP from Netbox
+    gather_facts: no
+    hosts: routers
+    vars:
+      netbox_url: "http://10.211.55.2:8001"
+      prefix_id: "1"
+      netbox_api_token: "Token 0123456789abcdef0123456789abcdef01234567"
+      
+    tasks:
+
+      - name: Assign IP from Netbox
+        uri:
+          url: "{{ netbox_url }}/api/ipam/prefixes/{{ prefix_id }}/available-ips/"
+          method: "POST"
+          headers:
+            Authorization: "{{ netbox_api_token }}"
+          status_code: 201
+        register: netbox_result
+        run_once: yes
+        
+      - debug:
+          var: netbox_result
+        run_once: yes
+      
+      - set_stats:
+          data:
+            ip_address: "{{ netbox_result.json.address }}"
